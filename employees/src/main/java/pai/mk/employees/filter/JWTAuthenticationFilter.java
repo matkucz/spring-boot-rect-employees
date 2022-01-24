@@ -66,9 +66,5 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             "{\"" + AuthenticationConfigConstants.HEADER_STRING + "\":\"" + AuthenticationConfigConstants.TOKEN_PREFIX + token + "\"}"
         );
         //END - SENDING JWT AS A BODY
-
-        //START - SENDING JWT AS A HEADER
-        response.addHeader(AuthenticationConfigConstants.HEADER_STRING, AuthenticationConfigConstants.TOKEN_PREFIX + token);
-        //END - SENDING JWT AS A HEADER
     }
 }

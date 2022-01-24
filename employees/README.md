@@ -7,9 +7,12 @@ export PG_DATABASE_HOST=localhost
 export PG_DATABASE_PORT=5432
 export PG_DATABASE_USER=your-user
 export PG_DATABASE_PASSWORD=your-password
+export ADMIN_PASSWORD=your-admin-password
 export JWT_TOKEN=your-random-token
 ```
 You can set JWT_TOKEN environment variable using Python secrets module:
 ```
 export JWT_TOKEN=$(python3 -c "import secrets;print(secrets.token_hex(16))")
 ```
+
+Admin account is created automatically after Spring init.

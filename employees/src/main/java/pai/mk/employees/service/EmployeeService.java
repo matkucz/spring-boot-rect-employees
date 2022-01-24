@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,7 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Employee createEmployee(@Valid EmployeeCreateRequest request) {
+    public Employee createEmployee(EmployeeCreateRequest request) {
         Optional<Departament> departament = departamentRepository.findById(request.getDepartamentId());
         if (!departament.isPresent()) {
             throw new EntityNotFoundException("Departament not found");
@@ -55,12 +54,12 @@ public class EmployeeService {
         employeeRepository.deleteById(id);
     }
 
-    public Employee updateEmployee(Long id, @Valid EmployeeCreateRequest request) {
+    public Employee updateEmployee(Long id, EmployeeCreateRequest request) {
         Optional <Employee> optionalEmployee = employeeRepository.findById(id);
         if (!optionalEmployee.isPresent()) {
             throw new EntityNotFoundException("Employee not present in database");
         }
-        Optional <Departament> optionalDepartament = departamentRepository.findById(id);
+        Optional <Departament> optionalDepartament = departamentRepository.findById(request.getDepartamentId());
         if (!optionalDepartament.isPresent()) {
             throw new EntityNotFoundException("Departament not present in database");
         }
@@ -89,7 +88,7 @@ public class EmployeeService {
         return departamentEmployees;     
     }
 
-    public Departament createDepartament(@Valid DepartamentCreateRequest request) {
+    public Departament createDepartament(DepartamentCreateRequest request) {
         Departament departament = new Departament();
         BeanUtils.copyProperties(request, departament);
         return departamentRepository.save(departament);
@@ -99,7 +98,7 @@ public class EmployeeService {
         departamentRepository.deleteById(id);
     }
 
-    public Departament updateDepartament(Long id, @Valid DepartamentCreateRequest request) {
+    public Departament updateDepartament(Long id, DepartamentCreateRequest request) {
         Optional <Departament> optionalDepartament = departamentRepository.findById(id);
         if (!optionalDepartament.isPresent()) {
             throw new EntityNotFoundException("Departament not present in database");

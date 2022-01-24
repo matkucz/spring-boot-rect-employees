@@ -1,7 +1,7 @@
 package pai.mk.employees.controller;
 
-import pai.mk.employees.model.Employee;
-import pai.mk.employees.model.request.EmployeeCreateRequest;
+import pai.mk.employees.model.Departament;
+import pai.mk.employees.model.request.DepartamentCreateRequest;
 import pai.mk.employees.service.EmployeeService;
 
 import java.util.HashMap;
@@ -28,10 +28,10 @@ import lombok.RequiredArgsConstructor;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/api/employee")
+@RequestMapping(value = "/api/departament")
 @RequiredArgsConstructor
-public class EmployeesController {
-    
+public class DepartamentController {
+
     @Autowired
     private EmployeeService employeeService;
 
@@ -52,16 +52,27 @@ public class EmployeesController {
         return ResponseEntity.badRequest().body(errorMap);
     }
 
+
     @GetMapping
-    public ResponseEntity<List<Employee>> getEmployees() {
-        log.info("Get employees");
-        return ResponseEntity.ok(employeeService.getEmployees());
+    public ResponseEntity<List<Departament>> getDepartaments() {
+        log.info("Get departaments");
+        return ResponseEntity.ok(employeeService.getDepartaments());
     }
 
-    @GetMapping("/{employeeId}")
-    public ResponseEntity getEmployee(@PathVariable Long employeeId) {
+    @GetMapping("/{departamentId}")
+    public ResponseEntity getDepartament(@PathVariable Long departamentId) {
         try {
-            return ResponseEntity.ok(employeeService.getEmployee(employeeId));
+            return ResponseEntity.ok(employeeService.getDepartament(departamentId));
+        } catch (Exception e) {
+            log.error("Exception: " + e.getMessage());
+            return returnExceptionError(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{departamentId}/employee")
+    public ResponseEntity getDepartamentEmployees(@PathVariable Long departamentId) {
+        try {
+            return ResponseEntity.ok(employeeService.getDepartamentEmployees(departamentId));
         } catch (Exception e) {
             log.error("Exception: " + e.getMessage());
             return returnExceptionError(e.getMessage());
@@ -69,36 +80,32 @@ public class EmployeesController {
     }
 
     @PostMapping
-    public ResponseEntity createEmployee (@RequestBody @Valid EmployeeCreateRequest request, BindingResult bindingResult) {
-        try {
-            if (bindingResult.hasErrors()) {
-                return returnErrors(bindingResult);
-            }
-            return ResponseEntity.ok(employeeService.createEmployee(request));
-        } catch (Exception e) {
-            log.error("Exception: " + e.getMessage());
-            return returnExceptionError(e.getMessage());
+    public ResponseEntity createDepartament (@RequestBody @Valid DepartamentCreateRequest request, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            log.error("Field errors");
+            return returnErrors(bindingResult);
         }
+        return ResponseEntity.ok(employeeService.createDepartament(request));
     }
 
-    @PatchMapping("/{employeeId}")
-    public ResponseEntity updateEmployee (@RequestBody @Valid EmployeeCreateRequest request, @PathVariable Long employeeId, BindingResult bindingResult) {
+    @PatchMapping("/{departamentId}")
+    public ResponseEntity updateDepartament (@RequestBody @Valid DepartamentCreateRequest request, @PathVariable Long departamentId, BindingResult bindingResult) {
         try {
             if (bindingResult.hasErrors()) {
                 log.error("Field errors");
                 return returnErrors(bindingResult);
             }
-            return ResponseEntity.ok(employeeService.updateEmployee(employeeId, request));
+            return ResponseEntity.ok(employeeService.updateDepartament(departamentId, request));
         } catch (Exception e) {
             log.error("Exception: " + e.getMessage());
             return returnExceptionError(e.getMessage());
         }
     }
 
-    @DeleteMapping("/{employeeId}")
-    public ResponseEntity deleteEmployee (@PathVariable Long employeeId) {
+    @DeleteMapping("/{departamentId}")
+    public ResponseEntity deleteDepartament (@PathVariable Long departamentId) {
         try {
-            employeeService.deleteEmployee(employeeId);
+            employeeService.deleteDepartament(departamentId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             log.error("Exception: " + e.getMessage());

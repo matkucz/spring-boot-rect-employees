@@ -28,10 +28,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
             .antMatchers(HttpMethod.POST, AuthenticationConfigConstants.SIGN_UP_URL).permitAll()
+            .antMatchers(HttpMethod.GET, "/api/departament").permitAll()
             //ROLE BASED AUTHENTICATION START
-//            .antMatchers("/api/library/book/**").hasAnyAuthority("USER", "ADMIN")
-//            .antMatchers("/api/library/author/**").hasAnyAuthority("ADMIN")
-//            .antMatchers("/api/library/member/**").hasAnyAuthority("ADMIN")
+           .antMatchers(HttpMethod.PATCH, "/api/user/**/grant").hasAnyAuthority("ADMIN")
+//            .antMatchers(HttpMethod.PATCH, "/api/employee/**").hasAnyAuthority("EDITOR")
+//            .antMatchers(HttpMethod.PATCH, "/api/departament/**").hasAnyAuthority("EDITOR")
             //ROLE BASED AUTHENTICATION END
             .anyRequest().authenticated()
             .and()

@@ -58,6 +58,11 @@ public class EmployeesController {
         return ResponseEntity.ok(employeeService.getDepartament(departamentId));
     }
 
+    @GetMapping("/departament/{departamentId}/employee")
+    public ResponseEntity<List<Employee>> getDepartamentEmployees(@PathVariable Long departamentId) {
+        return ResponseEntity.ok(employeeService.getDepartamentEmployees(departamentId));
+    }
+
     @PostMapping("/departament")
     public ResponseEntity<Departament> createDepartament (@RequestBody DepartamentCreateRequest request) {
         return ResponseEntity.ok(employeeService.createDepartament(request));

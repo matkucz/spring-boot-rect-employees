@@ -83,6 +83,12 @@ public class EmployeeService {
         throw new EntityNotFoundException("Can't find any departament under given ID");       
     }
 
+
+    public List<Employee> getDepartamentEmployees (Long id) {
+        List<Employee> departamentEmployees = employeeRepository.findByDepartamentId(id);
+        return departamentEmployees;     
+    }
+
     public Departament createDepartament(@Valid DepartamentCreateRequest request) {
         Departament departament = new Departament();
         BeanUtils.copyProperties(request, departament);

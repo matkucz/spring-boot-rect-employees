@@ -14,15 +14,12 @@ import org.springframework.validation.FieldError;
 
 import javax.validation.Valid;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import lombok.RequiredArgsConstructor;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 
 @RestController
 @RequestMapping(value = "/api/user")
@@ -34,7 +31,6 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity createUser (@RequestBody @Valid UserCreateRequest userCreateRequest, BindingResult bindingResult) {
-        // Logger logger = LogManager.getLogger(UserService.class);
         if (bindingResult.hasErrors()) {
             List<FieldError> errors = bindingResult.getFieldErrors();
             Map<String, String> errorsMap = new HashMap<String, String>();

@@ -8,7 +8,6 @@ export default function SignUp () {
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget);
-
         signUp(
             formData.get("username") as string,
             formData.get("password") as string,
@@ -17,22 +16,27 @@ export default function SignUp () {
     }
     return (
         <main className="d-flex justify-content-center">
-            <div className="d-flex justify-content-center col-md-12">
+            <div className="col-md-12">
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <h3>Sign Up</h3>
                     </div>
+                    {                        
+                        error && (
+                            <div className="alert alert-danger" role="alert">
+                                {  
+                                    error
+                                }
+                            </div>
+                        )
+                    }
                     <div className="mb-3">
-                        <label className="col-form-label">
-                            Username
-                            <input className="form-control" name="username" />
-                        </label>
+                        <label className="form-label">Username</label>
+                        <input className="form-control" name="username" />
                     </div>
                     <div className="mb-3">
-                        <label className="col-form-label">
-                            Password
-                            <input className="form-control" name="password" type="password"/>
-                        </label>
+                        <label className="form-label">Password</label>
+                        <input className="form-control" name="password" type="password"/>
                     </div>
                     <div className="mb-3">
                         <button className="btn btn-primary" disabled={loading}>Signup</button>

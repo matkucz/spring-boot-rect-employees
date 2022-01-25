@@ -1,11 +1,13 @@
-import useAuth from "../auth/useAuth.tsx";
 import { Navigate } from "react-router-dom";
-import { useLocation } from "react-router";
-import { addDepartament } from "../api/employee.tsx";
+import { useLocation, useNavigate } from "react-router";
+import useAuth from "../../auth/useAuth.tsx";
+import { addDepartament } from "../../api/departament.tsx";
 
 export default function AddDepartament () {
     const { user, loading } = useAuth();
     const location = useLocation();
+    const navigation = useNavigate();
+
     if (!user) {
         console.log(user);
         return <Navigate to="/" state={{ from: location }} replace/>;
@@ -17,18 +19,18 @@ export default function AddDepartament () {
         const formData = new FormData(event.currentTarget);
         const postData = {
             name: formData.get("name") as string,
-            description: formData.get("description") as string,
-            token: user.token as string
+            description: formData.get("description") as string
         }
         addDepartament(
-          postData
-        ).then((data) => {
-            console.log(data);
-        }).catch((error) => {
-            console.error(error);
-        }).finally(
-            () => {}
-        );
+            postData,
+            user.token as string
+          ).then(() => {
+              navigation("/departament");
+          }).catch((error) => {
+              console.error(error);
+          }).finally(
+              () => {}
+          );
     }
       
     return (

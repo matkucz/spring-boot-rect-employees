@@ -19,23 +19,19 @@ export default function Login() {
 
   return (
     <main className="d-flex justify-content-center">
-      <div className="d-flex justify-content-center col-md-12">
+      <div className="col-md-12">
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <h3>Login</h3>
           </div>
           <div className="mb-3">
-            <label className="col-form-label">
-              Username
-              <input className="form-control" name="username" />
-            </label>
+            <label className="col-form-label">Username</label>
+            <input className="form-control" name="username" />
           </div>
 
           <div className="mb-3">
-            <label className="col-form-label">
-              Password
-              <input  className="form-control" name="password" type="password" />
-            </label>
+            <label className="col-form-label">Password</label>
+            <input className="form-control" name="password" type="password" />
           </div>
 
           <div className="mb-3">

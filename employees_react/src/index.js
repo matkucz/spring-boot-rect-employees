@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import redaxios from "redaxios";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+
+redaxios.defaults.baseURL = 'http://localhost:8080';
 
 ReactDOM.render(
   <React.StrictMode>

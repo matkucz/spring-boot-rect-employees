@@ -14,11 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -87,8 +88,9 @@ public class DepartamentController {
         }
         return ResponseEntity.ok(employeeService.createDepartament(request));
     }
-
-    @PatchMapping("/{departamentId}")
+    
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping("/{departamentId}")
     public ResponseEntity updateDepartament (@RequestBody @Valid DepartamentCreateRequest request, @PathVariable Long departamentId, BindingResult bindingResult) {
         try {
             if (bindingResult.hasErrors()) {
@@ -102,6 +104,7 @@ public class DepartamentController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping("/{departamentId}")
     public ResponseEntity deleteDepartament (@PathVariable Long departamentId) {
         try {

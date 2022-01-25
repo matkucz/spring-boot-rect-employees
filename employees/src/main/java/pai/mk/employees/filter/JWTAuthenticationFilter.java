@@ -7,11 +7,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import pai.mk.employees.config.AuthenticationConfigConstants;
 import pai.mk.employees.model.UserModel;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -62,8 +62,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         //START - SENDING JWT AS A BODY
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+        String role = "";
+        for (GrantedAuthority granted: ((User) auth.getPrincipal()).getAuthorities()) {
+            role = granted.getAuthority();
+        }
         response.getWriter().write(
-            "{\"" + AuthenticationConfigConstants.HEADER_STRING + "\":\"" + AuthenticationConfigConstants.TOKEN_PREFIX + token + "\"}"
+            "{\"" + AuthenticationConfigConstants.HEADER_STRING + "\":\"" + AuthenticationConfigConstants.TOKEN_PREFIX + token + "\"," + "\"role\":\"" + role + "\"}"
         );
         //END - SENDING JWT AS A BODY
     }

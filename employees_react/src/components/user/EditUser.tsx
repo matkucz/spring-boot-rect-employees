@@ -14,15 +14,17 @@ export default function EditUser () {
     const [role, setRole] = useState(String);
 
     useEffect(() => {
-        getUser(id, user.token)
-            .then(data => {
-                setUsername(data.username);
-                setPassword(data.password);
-                setRole(data.role);
-            })
-            .catch(error => {
-                console.error(error);                
-            });
+        if (user) {
+            getUser(id, user.token)
+                .then(data => {
+                    setUsername(data.username);
+                    setPassword(data.password);
+                    setRole(data.role);
+                })
+                .catch(error => {
+                    console.error(error);                
+                });
+        }
     }, [location.pathname])
 
     function handleInput(event: React.FormEvent<HTMLFormElement>) {

@@ -12,14 +12,16 @@ export default function GrantRole () {
     const [displayName, setDisplayName] = useState(String);
 
     useEffect(() => {
-        getUser(id, user.token)
-            .then((data) => {
-                setDisplayName(data.username);
-                setRole(data.role);
-            })
-            .catch(error => {
-                console.error(error);                
-            });
+        if (user) {
+            getUser(id, user.token)
+                .then((data) => {
+                    setDisplayName(data.username);
+                    setRole(data.role);
+                })
+                .catch(error => {
+                    console.error(error);                
+                });
+        }
     }, [location.pathname]);
     
     function handleSubmit (event: React.FormEvent<HTMLFormElement>) {

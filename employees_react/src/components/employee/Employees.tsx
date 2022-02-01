@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Navigate, useParams } from "react-router";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import useAuth from "../../auth/useAuth.tsx";
@@ -14,14 +14,20 @@ export default function Employees () {
     const location = useLocation();
 
     useEffect(() => {
-        getDepartamentEmployees(id, user.token)
-            .then(data => {
-                setEmployees(data);
-            })
-            .catch(error => {
-                console.error(error);
-            })
+        if (user) {
+            getDepartamentEmployees(id, user.token)
+                .then(data => {
+                    setEmployees(data);
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
     }, [location.pathname]);
+
+    if (!user || user === null) {
+        return <Navigate to="/" state={{ from: location }} replace/>;
+    }
 
     return (
         <main>

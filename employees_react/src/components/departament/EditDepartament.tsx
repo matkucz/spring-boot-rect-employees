@@ -14,18 +14,15 @@ export default function EditDepartament () {
     const navigation = useNavigate();
     
     useEffect(() => {
-        getDepartament(id, user.token)
-            .then(data => {
-                setDisplayName(data.name);
-                setName(data.name);
-                setDescription(data.description);
-            })
+        if(user) {
+            getDepartament(id, user.token)
+                .then(data => {
+                    setDisplayName(data.name);
+                    setName(data.name);
+                    setDescription(data.description);
+                })
+        }
     }, [location.pathname]);
-    
-    if (!user) {
-        console.log(user);
-        return <Navigate to="/" state={{ from: location }} replace/>;
-    }
     
     function handleInput(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -47,7 +44,6 @@ export default function EditDepartament () {
         }
         editDepartament(id, patchData, user.token)
             .then(data => {
-                console.log("Sukces");
                 navigation("/departament");
             })
             .catch(error => {
@@ -55,6 +51,11 @@ export default function EditDepartament () {
             })
     }
       
+    if (!user) {
+        console.log(user);
+        return <Navigate to="/" state={{ from: location }} replace/>;
+    }
+    
     return (
         <main className="d-flex justify-content-center">
         <div className="col-md-12">

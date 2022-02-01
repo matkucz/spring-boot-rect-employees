@@ -8,11 +8,6 @@ export default function AddDepartament () {
     const location = useLocation();
     const navigation = useNavigate();
 
-    if (!user) {
-        console.log(user);
-        return <Navigate to="/" state={{ from: location }} replace/>;
-    }
-    
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
     
@@ -31,6 +26,10 @@ export default function AddDepartament () {
           }).finally(
               () => {}
           );
+    }
+
+    if (!user) {
+      return <Navigate to="/" state={{ from: location }} replace/>;
     }
       
     return (

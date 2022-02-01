@@ -58,7 +58,7 @@ public class UserController {
     public ResponseEntity createUser (@RequestBody @Valid UserCreateRequest userCreateRequest, BindingResult bindingResult) {
         try {
             if (bindingResult.hasErrors()) {
-                returnErrors(bindingResult);
+                return returnErrors(bindingResult);
             }
             if (userCreateRequest.getRole().equals("ADMIN")) {
                 throw new Exception("Can't create admin account");
@@ -91,7 +91,7 @@ public class UserController {
     public ResponseEntity editUser (@RequestBody @Valid UserCreateRequest userCreateRequest, @PathVariable Long userId, BindingResult bindingResult) {
         try {
             if (bindingResult.hasErrors()) {
-                returnErrors(bindingResult);
+                return returnErrors(bindingResult);
             }
             userService.editUser(userId, userCreateRequest);
             return ResponseEntity.ok().build();

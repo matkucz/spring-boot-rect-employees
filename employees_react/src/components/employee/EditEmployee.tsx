@@ -18,15 +18,11 @@ export default function EditEmployee () {
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-    
-        const formData = new FormData(event.currentTarget);
-        console.log(formData.get("departament"));
         const postData = {
             firstName: firstName as string,
             lastName: lastName as string,
             departamentId: parseInt(departamentId) as number,
         }
-        console.log(postData);
         editEmployee(id, postData, user.token)
             .then(data => {
                 navigation("/departament");

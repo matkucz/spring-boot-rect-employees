@@ -11,10 +11,12 @@ export default function Users () {
     const location = useLocation();
     
     useEffect(() => {
-        getUsers(user.token)
-            .then(data => {
-                setUsers(data);
-            })
+        if (user) {
+            getUsers(user.token)
+                .then(data => {
+                    setUsers(data);
+                })
+        }
     }, [location.pathname]);
 
     if (!user || user.role !== "ADMIN") {
